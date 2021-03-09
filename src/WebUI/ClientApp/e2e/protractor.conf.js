@@ -24,5 +24,13 @@ exports.config = {
     jasmine
       .getEnv()
       .addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
-  }
+  },
+  capabilities: {
+    chromeOptions: {
+      args: [ "--headless" ] //So we only display Playwright screens
+    },
+    browserName: 'chrome'
+  },
 };
+
+

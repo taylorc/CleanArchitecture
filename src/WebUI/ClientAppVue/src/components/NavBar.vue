@@ -5,7 +5,7 @@
     >
       <div class="container">
         <router-link class="navbar-brand" to="/"
-          >CleanArchitecture.WebUI</router-link
+          >CleanArchitecture.WebUI.Vue</router-link
         >
         <button
           class="navbar-toggler"

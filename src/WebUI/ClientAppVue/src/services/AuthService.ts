@@ -3,45 +3,66 @@
 
 import { ApplicationName, ApplicationPaths } from "@/models/Auth";
 import { UserManager, User } from "oidc-client";
+import { useRouter } from "vue-router";
+import useStore from "@/store";
+import { ActionTypes } from "@/store/modules/auth";
 
 export default class AuthService {
   private userManager: UserManager;
+  router = useRouter();
+  store = useStore();
+  //TODO: set user manager to a global state object so multiple calls don't happen
+  //constructor() {}
 
-  //TODO set user manager to a global state object so multiple calls don't happen
-  constructor() {
+  private async ensureUserManagerIsInitialized() {
     if (this.userManager !== undefined) {
       return;
     }
 
-    let response: Response;
-
-    fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl).then(
-      r => (response = r)
+    const response = await fetch(
+      ApplicationPaths.ApiAuthorizationClientConfigurationUrl
     );
+
+    await this.processResponse(response);
+  }
+
+  async signinRedirectCallback() {
+    //TODO set user in a global state
+    const user = await this.userManager.signinRedirectCallback();
+    this.store.dispatch(ActionTypes.SIGNIN, { username: "xx", password: "x" });
+    this.router.push("/");
+  }
+
+  public async getUser(): Promise<User | null> {
+    await this.ensureUserManagerIsInitialized();
+    console.log(this.store.getters.isAuthenticated);
+    return this.store.getters.isAuthenticated ? null : null;
+    //return await this.userManager.getUser();
+  }
+
+  public async login(): Promise<void> {
+    await this.ensureUserManagerIsInitialized();
+    return await this.userManager.signinRedirect();
+  }
+
+  public async logout(): Promise<void> {
+    await this.ensureUserManagerIsInitialized();
+    return await this.userManager.signoutRedirect();
+  }
+
+  processResponse = async (response: Response) => {
     if (!response.ok) {
       throw new Error(`Could not load settings for '${ApplicationName}'`);
     }
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const settings: any = response.json();
+    const settings: any = await response.json();
+
     settings.automaticSilentRenew = true;
     settings.includeIdTokenInSilentRenew = true;
-    this.userManager = new UserManager(settings);
 
+    this.userManager = new UserManager(settings);
     this.userManager.events.addUserSignedOut(async () => {
       await this.userManager.removeUser();
     });
-  }
-
-  public getUser(): Promise<User | null> {
-    return this.userManager.getUser();
-  }
-
-  public login(): Promise<void> {
-    return this.userManager.signinRedirect();
-  }
-
-  public logout(): Promise<void> {
-    return this.userManager.signoutRedirect();
-  }
+  };
 }

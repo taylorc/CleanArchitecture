@@ -6,15 +6,15 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed, onMounted } from "vue";
+import { defineComponent, computed, ref } from "vue";
 import AuthService from "@/services/AuthService";
 
 export default defineComponent({
-  setup() {
-    const auth = new AuthService();
+  async setup() {
+    let auth: AuthService = null;
     let currentUser = "";
     let accessTokenExpired: boolean | undefined = false;
-    let isLoggedIn = false;
+    const isLoggedIn = ref(false);
 
     const username = computed(() => currentUser);
 
@@ -26,17 +26,22 @@ export default defineComponent({
       auth.logout();
     };
 
-    onMounted(() => {
+    const init = async () => {
+      auth = new AuthService();
       // eslint-disable-next-line prettier/prettier
-      auth.getUser().then((user) => {
-        if (user !== null) {
-          currentUser = user.profile.name;
-          accessTokenExpired = user.expired;
-        }
+      const user = await auth.getUser(); //.then((user) => {
+      if (user !== null) {
+        currentUser = user.profile.name;
+        accessTokenExpired = user.expired;
+        isLoggedIn.value = !accessTokenExpired;
+      } else {
+        isLoggedIn.value = false;
+      }
 
-        isLoggedIn = user && !accessTokenExpired;
-      });
-    });
+      console.log(isLoggedIn.value);
+    };
+
+    await init();
 
     return { username, login, logout, currentUser, isLoggedIn };
   }

@@ -1,11 +1,11 @@
 import AuthService from "@/services/AuthService";
 import { User } from "oidc-client";
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 
 const authService: AuthService = new AuthService();
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: "/",
     name: "Home",
@@ -25,11 +25,19 @@ const routes: Array<RouteRecordRaw> = [
     name: "Login",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Login.vue")
+  },
+  {
+    path: "/authentication/login-callback",
+    name: "Callback",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/authentication/Callback.vue"
+      )
   }
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 });
 

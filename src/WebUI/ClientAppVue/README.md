@@ -32,3 +32,6 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Libraries (outside of standard vue)
+vuex-module-decorators - https://github.com/championswimmer/vuex-module-decorators

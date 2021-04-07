@@ -10,7 +10,7 @@ import { defineComponent, computed, ref } from "vue";
 import AuthService from "@/services/AuthService";
 
 export default defineComponent({
-  async setup() {
+  setup() {
     let auth: AuthService = null;
     let currentUser = "";
     let accessTokenExpired: boolean | undefined = false;
@@ -26,10 +26,9 @@ export default defineComponent({
       auth.logout();
     };
 
-    const init = async () => {
-      auth = new AuthService();
-      // eslint-disable-next-line prettier/prettier
-      const user = await auth.getUser(); //.then((user) => {
+    auth = new AuthService();
+    // eslint-disable-next-line prettier/prettier
+    auth.getUser().then((user) => {
       if (user !== null) {
         currentUser = user.profile.name;
         accessTokenExpired = user.expired;
@@ -38,10 +37,8 @@ export default defineComponent({
         isLoggedIn.value = false;
       }
 
-      console.log(isLoggedIn.value);
-    };
-
-    await init();
+      console.log("logged in...", isLoggedIn.value);
+    });
 
     return { username, login, logout, currentUser, isLoggedIn };
   }

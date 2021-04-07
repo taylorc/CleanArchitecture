@@ -90,7 +90,7 @@ namespace CleanArchitecture.WebUI
             }
 
             app.UseHealthChecks("/health");
-            app.UseHttpsRedirection();
+            
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
@@ -106,6 +106,7 @@ namespace CleanArchitecture.WebUI
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseHttpsRedirection();
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

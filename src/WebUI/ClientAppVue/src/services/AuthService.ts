@@ -5,7 +5,6 @@ import { ApplicationName, ApplicationPaths } from "@/models/Auth";
 import { UserManager, User } from "oidc-client";
 import { useRouter } from "vue-router";
 import useStore from "@/store";
-import { ActionTypes } from "@/store/modules/auth";
 
 export default class AuthService {
   private userManager: UserManager;
@@ -18,6 +17,7 @@ export default class AuthService {
     if (this.userManager !== undefined) {
       return;
     }
+    console.log(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
 
     const response = await fetch(
       ApplicationPaths.ApiAuthorizationClientConfigurationUrl
@@ -28,16 +28,18 @@ export default class AuthService {
 
   async signinRedirectCallback() {
     //TODO set user in a global state
-    const user = await this.userManager.signinRedirectCallback();
-    this.store.dispatch(ActionTypes.SIGNIN, { username: "xx", password: "x" });
+    await this.ensureUserManagerIsInitialized();
+    console.log("signinRedirectCallback");
+
+    await this.userManager.signinRedirectCallback();
     this.router.push("/");
   }
 
   public async getUser(): Promise<User | null> {
     await this.ensureUserManagerIsInitialized();
-    console.log(this.store.getters.isAuthenticated);
-    return this.store.getters.isAuthenticated ? null : null;
-    //return await this.userManager.getUser();
+    console.log("getUser....");
+
+    return await this.userManager.getUser();
   }
 
   public async login(): Promise<void> {
@@ -56,6 +58,8 @@ export default class AuthService {
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const settings: any = await response.json();
+
+    console.log("processResponse...", settings);
 
     settings.automaticSilentRenew = true;
     settings.includeIdTokenInSilentRenew = true;

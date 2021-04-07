@@ -35,7 +35,7 @@
               >
             </li>
             <li class="nav-item">
-              <router-link class="nav-link text-dark" to="/"
+              <router-link class="nav-link text-dark" to="/fetchdata"
                 >Fetch data</router-link
               >
             </li>

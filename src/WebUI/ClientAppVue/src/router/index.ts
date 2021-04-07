@@ -21,6 +21,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
+    path: "/fetchdata",
+    name: "FetchData",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/FetchData.vue")
+  },
+  {
     path: "/login",
     name: "Login",
     component: () =>
@@ -42,13 +48,22 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/register", "/login"];
+  const publicPages = [
+    "/",
+    "/register",
+    "/login",
+    "/authentication/login-callback"
+  ];
   const authRequired = !publicPages.includes(to.path);
   let loggedIn: User | null = null;
 
   authService.getUser().then(u => {
     loggedIn = u;
   });
+
+  console.log(loggedIn);
+  console.log(!loggedIn);
+  console.log(authRequired);
 
   // trying to access a restricted page + not logged in
   // redirect to login page

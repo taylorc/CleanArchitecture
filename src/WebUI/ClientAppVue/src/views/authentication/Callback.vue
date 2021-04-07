@@ -1,3 +1,6 @@
+<template>
+  <p>Loading....</p>
+</template>
 <script lang="ts">
 import { defineComponent } from "vue";
 import AuthService from "@/services/AuthService";

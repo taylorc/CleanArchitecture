@@ -106,7 +106,12 @@ namespace CleanArchitecture.WebUI
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseHttpsRedirection();
+
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

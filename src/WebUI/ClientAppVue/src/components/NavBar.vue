@@ -8,21 +8,17 @@
           >CleanArchitecture.WebUI.Vue</router-link
         >
         <button
-          class="navbar-toggler"
+          class="navbar-toggle collapsed"
           type="button"
-          data-toggle="collapse"
-          data-target=".navbar-collapse"
+          v-on:click="toggle"
           aria-label="Toggle navigation"
           :aria-expanded="isExpanded"
-          @click="toggle()"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
         <div
           class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-          :style="{
-            show: isExpanded
-          }"
+          :class="isExpanded ? 'show' : ''"
         >
           <!-- <app-login-menu></app-login-menu> -->
           <ul class="navbar-nav flex-grow">
@@ -52,18 +48,19 @@
   </header>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "NavBar",
   setup() {
-    let isExpanded = false;
+    const isExpanded = ref(false);
 
     function collapse() {
-      isExpanded = false;
+      isExpanded.value = false;
     }
     function toggle() {
-      isExpanded = !isExpanded;
+      isExpanded.value = !isExpanded.value;
+      console.log("toggle", isExpanded.value);
     }
 
     return { collapse, isExpanded, toggle };

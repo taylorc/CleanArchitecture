@@ -68,23 +68,20 @@
       "type": "computed",
       "value": "(!UseSQLite)"
     },
-    "WebProjectName": {
+    "caRepositoryUrl": {
       "type": "generated",
-      "generator": "switch",
-      "replaces": "WebUI",
+      "generator": "constant",
+      "replaces": "caRepositoryUrl",
       "parameters": {
-        "evaluator": "C++",
-        "datatype": "text",
-        "cases": [
-          {
-            "condition": "(UseApiOnly)",
-            "value": "WebApi"
-          },
-          {
-            "condition": "",
-            "value": "WebUI"
-          }
-        ]
+        "value": "https://github.com/jasontaylordev/CleanArchitecture"
+      }
+    },
+    "caPackageVersion": {
+      "type": "generated",
+      "generator": "constant",
+      "replaces": "caPackageVersion",
+      "parameters": {
+        "value": "8.0.3"
       }
     }
   },
@@ -93,37 +90,36 @@
       "source": "./",
       "target": "./",
       "exclude": [
-        "README.md",
-        "**/[Bb]in/**",
-        "**/[Oo]bj/**",
         ".template.config/**/*",
         "templates/**/*",
-        ".vs/**/*",
         "**/*.filelist",
         "**/*.user",
         "**/*.lock.json",
-        "**/.git/**",
-        "*.nuspec",
-        "**/node_modules/**",
-        "**/web-api-client.ts",
-        "src/WebUI/wwwroot/api/**"
+        "*.nuspec"
       ],
+      "rename": {
+        "README-template.md": "README.md"
+      },
       "modifiers": [
         {
           "condition": "(UseAngular)",
           "exclude": [
-            "src/WebUI/config-react.nswag",
-            "src/WebUI/config-webapi.nswag",
-            "src/WebUI/ClientApp-React/**",
-            "src/WebUI/Templates/**"
+            "src/Web/ClientApp-React/**",
+            "src/Web/Endpoints/Users.cs",
+            "src/Web/Templates/**",
+            "src/Web/config-react.nswag",
+            "src/Web/config-webapi.nswag",
+            "src/Web/Web-webapi.http"
           ]
         },
         {
           "condition": "(UseReact)",
           "exclude": [
-            "src/WebUI/config.nswag",
-            "src/WebUI/config-webapi.nswag",
-            "src/WebUI/ClientApp/**"
+            "src/Web/ClientApp/**",
+            "src/Web/Endpoints/Users.cs",
+            "src/Web/config.nswag",
+            "src/Web/config-webapi.nswag",
+            "src/Web/Web-webapi.http"
           ],
           "rename": {
             "config-react.nswag": "config.nswag",
@@ -145,33 +141,35 @@
         {
           "condition": "(UseApiOnly)",
           "exclude": [
-            "src/WebUI/config.nswag",
-            "src/WebUI/ClientApp/**",
-            "src/WebUI/config-react.nswag",
-            "src/WebUI/ClientApp-React/**",
-            "src/WebUI/Templates/**",
-            "tests/WebUI.AcceptanceTests/**"
+            "src/Web/ClientApp/**",
+            "src/Web/ClientApp-React/**",
+            "src/Web/Templates/**",
+            "src/Web/config.nswag",
+            "src/Web/config-react.nswag",
+            "src/Web/Web.http",
+            "tests/Web.AcceptanceTests/**"
           ],
           "rename": {
             "config-webapi.nswag": "config.nswag",
-            "WebUI": "WebApi"
+            "Web-webapi.http": "Web.http"
           }
         },
         {
           "condition": "(UseLocalDB)",
           "exclude": [
             "src/Infrastructure/Data/SQLite/**",
-            "src/WebUI/appsettings.SQLite.json",
-            "src/WebUI/app.db",
-            "tests/Application.IntegrationTests/TestDatabase.Sqlite.cs"
+            "src/Web/appsettings.SQLite.json",
+            "src/Web/app.db",
+            "tests/Application.FunctionalTests/SqliteTestDatabase.cs"
           ]
         },
         {
           "condition": "(UseSQLite)",
           "exclude": [
             "src/Infrastructure/Data/Migrations/**",
-            "src/WebUI/appsettings.json",
-            "tests/Application.IntegrationTests/TestDatabase.cs"
+            "src/Web/appsettings.json",
+            "tests/Application.FunctionalTests/SqlServerTestDatabase.cs",
+            "tests/Application.FunctionalTests/TestcontainersTestDatabase.cs"
           ],
           "rename": {
             "src/Infrastructure/Data/SQLite/" : "src/Infrastructure/Data/Migrations/",

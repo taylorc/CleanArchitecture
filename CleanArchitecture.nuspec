@@ -3,15 +3,15 @@
   <metadata>
 
     <id>Clean.Architecture.Solution.Template</id>
-    <version>8.0.0-preview.5.14</version>
+    <version>8.0.3</version>
     <title>Clean Architecture Solution Template</title>
     <authors>JasonTaylorDev</authors>
     <description>Clean Architecture Solution Template for .NET 8.</description>
     <summary>
-      A Clean Architecture Solution Template for creating a Single-Page Application (SPA) with ASP.NET Core.
+      A Clean Architecture Solution Template for creating apps using Angular, React, or Web API only with ASP.NET Core.
     </summary>
     <releaseNotes>
-      Fixed migrations for SQLite and LocalDB.
+      Upgrade NSwag and other packages to latest versions.
     </releaseNotes>
 
     <projectUrl>https://github.com/JasonTaylorDev/CleanArchitecture</projectUrl>
@@ -32,7 +32,7 @@
   <files>
     <file src=".template.config\icon.png" />
     <file src="README.md" />
-    <file src=".\**" target="content" exclude="**\node_modules\**;**\bin\**;**\obj\**;**\.vs\**;**\.vscode\**;**\ClientApp\dist\**;**\wwwroot\dist\**;content\Directory.Build.*;**\.git\**;**\.github\**;**\CODE_OF_CONDUCT.md;**\LICENSE;**\README.md;" />
+    <file src=".\**" target="content" exclude="**\node_modules\**;**\bin\**;**\obj\**;.\.vs\**;.\.vscode\**;**\ClientApp\dist\**;**\wwwroot\dist\**;content\Directory.Build.*;.\.git\**;.\.github\workflows\package.yml;.\.github\workflows\codeql.yml;.\.github\ISSUE_TEMPLATE\**;.\.github\icon.png;.\CODE_OF_CONDUCT.md;.\LICENSE;.\README.md;" />
   </files>
 
 </package>

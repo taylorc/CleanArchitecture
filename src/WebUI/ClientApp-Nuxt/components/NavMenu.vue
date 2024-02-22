@@ -1,8 +1,8 @@
 ﻿<template>
   <header>
-    <BNavbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
+    <nav  className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
       <BNavbarBrand tag={Link} to="/">WebUI</BNavbarBrand>
-      <BNavbarToggle onClick={this.toggleNavbar} className="mr-2" />
+      <a class="navbar-brand" onClick={this.toggleNavbar} className="mr-2" />
       <BCollapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
         <ul className="navbar-nav flex-grow">
           <BNavItem>
@@ -19,7 +19,7 @@
           </BNavItem>
         </ul>
       </BCollapse>
-    </BNavbar>
+    </nav>
   </header>
 </template>
 <script setup>

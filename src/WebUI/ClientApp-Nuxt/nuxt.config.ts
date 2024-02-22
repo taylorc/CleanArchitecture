@@ -1,7 +1,6 @@
 ﻿// @ts-ignore
 export default defineNuxtConfig({
-    modules: ['@bootstrap-vue-next/nuxt'],
-    css: ['bootstrap/dist/css/bootstrap.min.css'],
+    css: ['~/assets/styles/main.scss'],
     devServer: {
         port: process.env.PORT || 44447,
         https: {

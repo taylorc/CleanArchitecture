@@ -12,5 +12,11 @@
     "@nuxt/devtools": "latest",
     "@types/node": "^18.16.19",
     "nuxt": "^3.6.5"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.1",
+    "sass": "^1.66.1",
+    "sass-loader": "^13.3.2"
   }
 }

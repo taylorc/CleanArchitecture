@@ -25,7 +25,7 @@ export default defineNuxtConfig({
       },
     },
     css: [
-      "bootstrap/scss/bootstrap.scss"
+      "bootstrap/scss/bootstrap.scss", "~/assets/scss/main.scss"
     ],
   devtools: { enabled: true },
   devServer: {

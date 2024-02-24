@@ -13,6 +13,20 @@ const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
 const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 
 export default defineNuxtConfig({
+  modules: [
+    'usebootstrap'
+    ],
+    usebootstrap: {
+      bootstrap: {
+        prefix: ``
+      },
+      html: {
+        prefix: `B`
+      },
+    },
+    css: [
+      "bootstrap/scss/bootstrap.scss"
+    ],
   devtools: { enabled: true },
   devServer: {
     https: {

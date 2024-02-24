@@ -20,14 +20,14 @@ if (!certificateName) {
 const certFilePath = path.join(baseFolder, `${certificateName}.pem`);
 const keyFilePath = path.join(baseFolder, `${certificateName}.key`);
 
-if (!fs.existsSync('../.env/.env.development.local')) {
+if (!fs.existsSync('.env.development.local')) {
   fs.writeFileSync(
-    '../.env/env.development.local',
-    `SSL_CRT_FILE=${certFilePath}
-    SSL_KEY_FILE=${keyFilePath}`
+    '.env.development.local',
+`SSL_CRT_FILE=${certFilePath}
+SSL_KEY_FILE=${keyFilePath}`
   );
 } else {
-  let lines = fs.readFileSync('../.env/env.development.local')
+  let lines = fs.readFileSync('.env.development.local')
     .toString()
     .split('\n');
 
@@ -42,13 +42,13 @@ if (!fs.existsSync('../.env/.env.development.local')) {
   }
   if (!hasCert) {
     fs.appendFileSync(
-      '../.env/env.development.local',
+      '.env.development.local',
       `\nSSL_CRT_FILE=${certFilePath}`
     );
   }
   if (!hasCertKey) {
     fs.appendFileSync(
-      '../.env/env.development.local',
+      '.env.development.local',
       `\nSSL_KEY_FILE=${keyFilePath}`
     );
   }

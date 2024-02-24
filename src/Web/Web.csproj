@@ -2,9 +2,10 @@
 
   <PropertyGroup>
     <!--#if (!UseApiOnly)-->
-    <SpaRoot>ClientApp\</SpaRoot>
+    <SpaRoot>ClientApp-Nuxt\</SpaRoot>
     <SpaProxyServerUrl>https://localhost:44447</SpaProxyServerUrl>
-    <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
+    <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
+
     <!--#endif-->
     <RootNamespace>CleanArchitecture.Web</RootNamespace>
     <AssemblyName>CleanArchitecture.Web</AssemblyName>
@@ -78,7 +79,7 @@
     <!--#if (UseAngular)-->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" />
     <!--#endif-->
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" Condition="'$(UseReact)' == 'True'" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" Condition="'$(UseReact)' == 'True' Or $(UseNuxt)' == 'True'" />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
@@ -86,6 +87,7 @@
       <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
       <!--#endif-->
       <DistFiles Include="$(SpaRoot)build\**" Condition="'$(UseReact)' == 'True'" />
+      <DistFiles Include="$(SpaRoot)dist\**" Condition="'$(UseNuxt)' == 'True'" />
       <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

@@ -16,6 +16,9 @@ export default defineNuxtConfig({
   modules: [
     'usebootstrap'
     ],
+  runtimeConfig: {
+    apiProxyUrl: 'https://localhost:5001/api/'
+  },
     usebootstrap: {
       bootstrap: {
         prefix: ``
@@ -27,6 +30,12 @@ export default defineNuxtConfig({
     css: [
       "bootstrap/scss/bootstrap.scss", "~/assets/scss/main.scss"
     ],
+    // routeRules: {
+    //   '/api/**': { proxy: `${target}/api/**` },
+    //   '/Identity/**': { proxy: `${target}/Identity/**` },
+    //   '/weatherforecast': { proxy: `${target}/weatherforecast` },
+    //   '/WeatherForecast': { proxy: `${target}/WeatherForecast` },
+    // },
   devtools: { enabled: true },
   devServer: {
     https: {

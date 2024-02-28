@@ -11,7 +11,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "fetch": "^1.1.0",
     "nuxt": "^3.10.3",
+    "ufo": "^1.4.0",
     "usebootstrap": "^3.5.1",
     "vue": "^3.4.19",
     "vue-demi": "^0.14.7",

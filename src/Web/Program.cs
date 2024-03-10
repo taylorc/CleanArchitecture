@@ -2,6 +2,8 @@ using CleanArchitecture.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 // Add services to the container.
 builder.Services.AddKeyVaultIfConfigured(builder.Configuration);
 
@@ -10,6 +12,8 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddWebServices();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

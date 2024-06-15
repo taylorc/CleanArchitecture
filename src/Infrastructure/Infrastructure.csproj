@@ -14,6 +14,8 @@
   </ItemGroup>
   <!--#endif-->
   <ItemGroup>
+    <PackageReference Include="Ardalis.GuardClauses" />
+    <PackageReference Include="Aspire.Microsoft.EntityFrameworkCore.SqlServer" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <!--#if (!UseApiOnly)-->
@@ -29,9 +31,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\CleanArchitecture.ServiceDefaults\CleanArchitecture.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

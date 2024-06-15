@@ -1,48 +1,60 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
 using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Identity;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Infrastructure.Data;
 
-public static class InitialiserExtensions
+
+public class ApplicationDbContextInitialiser : BackgroundService
 {
-    public static async Task InitialiseDatabaseAsync(this WebApplication app)
-    {
-        using var scope = app.Services.CreateScope();
-
-        var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDbContextInitialiser>();
-
-        await initialiser.InitialiseAsync();
-
-        await initialiser.SeedAsync();
-    }
-}
-
-public class ApplicationDbContextInitialiser
-{
+    private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<ApplicationDbContextInitialiser> _logger;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
 
-    public ApplicationDbContextInitialiser(ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+    public ApplicationDbContextInitialiser(IServiceProvider serviceProvider, ILogger<ApplicationDbContextInitialiser> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
+        _serviceProvider = serviceProvider;
         _logger = logger;
         _context = context;
         _userManager = userManager;
         _roleManager = roleManager;
     }
 
+    public const string ActivitySourceName = "Migrations";
+
+    private readonly ActivitySource _activitySource = new(ActivitySourceName);
+
+    protected override async Task ExecuteAsync(CancellationToken cancellationToken)
+    {
+        using var scope = _serviceProvider.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        await InitialiseDatabaseAsync(_serviceProvider);
+    }
+
+    public async Task InitialiseDatabaseAsync(IServiceProvider serviceProvider)
+    {
+        using var activity = _activitySource.StartActivity("Initializing catalog database", ActivityKind.Client);
+
+        var sw = Stopwatch.StartNew();
+
+        await InitialiseAsync();
+
+        await SeedAsync();
+
+        _logger.LogInformation("Database initialization completed after {ElapsedMilliseconds}ms", sw.ElapsedMilliseconds);
+    }
+
     public async Task InitialiseAsync()
     {
         try
         {
+
             await _context.Database.MigrateAsync();
         }
         catch (Exception ex)

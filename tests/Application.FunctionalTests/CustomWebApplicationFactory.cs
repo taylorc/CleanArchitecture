@@ -1,5 +1,6 @@
 ﻿using System.Data.Common;
 using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Application.Common.Models;
 using CleanArchitecture.Infrastructure.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

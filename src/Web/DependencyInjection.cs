@@ -1,7 +1,6 @@
 ﻿using Azure.Identity;
 using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Infrastructure.Data;
-using CleanArchitecture.Web.Services;
 using Microsoft.AspNetCore.Mvc;
 
 #if (UseApiOnly)
@@ -17,9 +16,9 @@ public static class DependencyInjection
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
 
-        services.AddScoped<IUser, CurrentUser>();
+        //services.AddScoped<IUser, CurrentUser>();
 
-        services.AddHttpContextAccessor();
+        //services.AddHttpContextAccessor();
 
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using CleanArchitecture.Application.Common.Exceptions;
 using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Application.Common.Models;
 using CleanArchitecture.Application.Common.Security;
 
 namespace CleanArchitecture.Application.Common.Behaviours;

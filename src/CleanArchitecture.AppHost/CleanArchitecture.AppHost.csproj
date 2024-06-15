@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DatabaseManager\DatabaseManager.csproj" />
     <ProjectReference Include="..\Web\Web.csproj" />
   </ItemGroup>
 

@@ -2,7 +2,7 @@
 using CleanArchitecture.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
 
-namespace CleanArchitecture.Application.Services;
+namespace CleanArchitecture.Infrastructure.Services;
 
 public class CurrentUser : IUser
 {

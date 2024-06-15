@@ -1,8 +1,10 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using Ardalis.GuardClauses;
+using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Domain.Constants;
 using CleanArchitecture.Infrastructure.Data;
 using CleanArchitecture.Infrastructure.Data.Interceptors;
 using CleanArchitecture.Infrastructure.Identity;
+using CleanArchitecture.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -14,27 +16,28 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        
 
-        Guard.Against.Null(connectionString, message: "Connection string 'DefaultConnection' not found.");
+        services.AddScoped<IUser, CurrentUser>();
 
-        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
-        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+        services.AddHttpContextAccessor();
 
-        services.AddDbContext<ApplicationDbContext>((sp, options) =>
-        {
-            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+//        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+//        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
-#if (UseSQLite)
-            options.UseSqlite(connectionString);
-#else
-            options.UseSqlServer(connectionString);
-#endif
-        });
+//        services.AddDbContext<ApplicationDbContext>((sp, options) =>
+//        {
+//            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+//#if (UseSQLite)
+//            options.UseSqlite(connectionString);
+//#else
+//            options.UseSqlServer(connectionString);
+//#endif
+//        });
 
-        services.AddScoped<ApplicationDbContextInitialiser>();
+//        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
+
 
 #if (UseApiOnly)
         services.AddAuthentication()

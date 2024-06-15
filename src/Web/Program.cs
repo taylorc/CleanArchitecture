@@ -18,7 +18,7 @@ app.MapDefaultEndpoints();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    await app.InitialiseDatabaseAsync();
+    //await app.InitialiseDatabaseAsync();
 }
 else
 {

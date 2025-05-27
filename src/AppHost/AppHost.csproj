@@ -20,6 +20,7 @@
     <!--#if (UseSqlServer)-->
     <PackageReference Include="Aspire.Hosting.SqlServer" />
     <!--#endif-->
+
   </ItemGroup>
 
   <ItemGroup>

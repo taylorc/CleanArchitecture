@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.6",
+    "bootstrap-icons": "^1.13.1",
     "nuxt": "^3.17.1",
     "sass": "1.77.6",
     "vue": "latest"

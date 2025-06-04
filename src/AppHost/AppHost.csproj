@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Sdk Name="Aspire.AppHost.Sdk" Version="9.0.0" />
+  <Sdk Name="Aspire.AppHost.Sdk" Version="9.3.0" />
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -19,6 +19,10 @@
     <!--#endif-->
     <!--#if (UseSqlServer)-->
     <PackageReference Include="Aspire.Hosting.SqlServer" />
+
+    <!--#endif-->
+    <!--#if (UseNuxt)-->
+    <PackageReference Include="CommunityToolkit.Aspire.Hosting.NodeJS.Extensions" />
     <!--#endif-->
 
   </ItemGroup>

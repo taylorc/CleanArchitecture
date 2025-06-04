@@ -29,7 +29,7 @@ web
     .WaitFor(database);
 #endif
 
-#if(UseNuxt)
+// #if(UseNuxt)
 
    builder.AddPnpmApp("WebApp", "../WebApp", "dev")
         .WithHttpsEndpoint(env: "PORT")
@@ -40,6 +40,6 @@ web
         .WithEnvironment("ApiUrl", web.GetEndpoint("https"))
         //.WithEnvironmentPrefix("NUXT_PUBLIC_")
         .RunWithHttpsDevCertificate("CERT_PATH", "CERT_KEY_PATH");
-#endif
+// #endif
 
 builder.Build().Run();

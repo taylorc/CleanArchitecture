@@ -31,7 +31,7 @@ web
 
 // #if(UseNuxt)
 
-   builder.AddPnpmApp("WebApp", "../WebApp", "dev")
+   builder.AddPnpmApp("WebClientApp-Nuxt", "../WebClientApp-Nuxt", "dev")
         .WithHttpsEndpoint(env: "PORT")
         .WithExternalHttpEndpoints()
         .WithNpmPackageInstallation()
